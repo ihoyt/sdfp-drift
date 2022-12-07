@@ -596,6 +596,9 @@ def main():
     end_date = '2022-11-12'
     start_date = end_date - datetime.timedelta(days=7)
 
+    print(end_date)
+    print(start_date)
+
     new_data = get_wd_w_buffer(start_date, end_date, engine)
     surveys = get_surveys(engine)
 
