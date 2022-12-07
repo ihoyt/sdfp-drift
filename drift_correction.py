@@ -592,6 +592,10 @@ def main():
     # Process data  #
     #####################
 
+    r = requests.get("https://postman-echo.com/ip")
+    print(r)
+    print(r.content)
+
     end_date = pd.to_datetime(datetime.datetime.utcnow())
     # end_date = pd.to_datetime(1668903882, unit='s')
     start_date = end_date - datetime.timedelta(days=30)
