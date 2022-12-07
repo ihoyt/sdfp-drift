@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import datetime
 import warnings
+import requests
 import os
 import json
 import gspread
