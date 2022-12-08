@@ -599,7 +599,7 @@ def main():
 
     end_date = pd.to_datetime(datetime.datetime.utcnow())
     # end_date = pd.to_datetime(1668903882, unit='s')
-    start_date = end_date - datetime.timedelta(days=30)
+    start_date = end_date - datetime.timedelta(days=31)
 
     new_data = get_wd_w_buffer(start_date, end_date, engine)
     surveys = get_surveys(engine)
@@ -619,13 +619,13 @@ def main():
     #  Flood alerts  #
     ###################
    
-    alert_flooding(x = drift_corrected_df, engine = engine)
+    # alert_flooding(x = drift_corrected_df, engine = engine)
     
     #######################################
     #  Update flood tracking spreadsheet  #
     #######################################
     
-    update_tracking_spreadsheet(data = drift_corrected_df, flood_cutoff = 0)
+    # update_tracking_spreadsheet(data = drift_corrected_df, flood_cutoff = 0)
     
     #############################
     # Cleanup the DB connection #
