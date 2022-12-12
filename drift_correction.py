@@ -594,8 +594,6 @@ def main():
     #####################
 
     end_date = pd.to_datetime(datetime.datetime.utcnow())
-    end_date = end_date - datetime.timedelta(days=18)
-    # end_date = pd.to_datetime(1668903882, unit='s')
     start_date = end_date - datetime.timedelta(days=7)
 
     new_data = get_wd_w_buffer(start_date, end_date, engine)
