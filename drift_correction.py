@@ -3,7 +3,6 @@ import pandas as pd
 import numpy as np
 import datetime
 import warnings
-import requests
 import os
 import json
 import gspread
@@ -614,13 +613,13 @@ def main():
     #  Flood alerts  #
     ###################
    
-    # alert_flooding(x = drift_corrected_df, engine = engine)
+    alert_flooding(x = drift_corrected_df, engine = engine)
     
     #######################################
     #  Update flood tracking spreadsheet  #
     #######################################
     
-    # update_tracking_spreadsheet(data = drift_corrected_df, flood_cutoff = 0)
+    update_tracking_spreadsheet(data = drift_corrected_df, flood_cutoff = 0)
     
     #############################
     # Cleanup the DB connection #
