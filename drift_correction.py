@@ -158,17 +158,18 @@ def smooth_baseline_wl(x):
     smoothed_baseline_wl = pd.DataFrame()
     
     for selected_survey in survey_dates:
-        # print(selected_survey)
         selected_data = x.query("date_surveyed == @selected_survey").copy()
-    
-        rolling_min = selected_data.set_index("date")["sensor_water_depth"].rolling('2d').min().reset_index()
+
+        # rolling_min = selected_data.set_index("date")["sensor_water_depth"].rolling('2d').min().reset_index()
+        rolling_min = selected_data.set_index("date")["sensor_water_depth"].rolling('2d').quantile(0.04).reset_index()
+        
         rolling_min.rename(columns={'sensor_water_depth':'rolling_min_wd'}, inplace = True)
         rolling_min["lag_min_wd"] = rolling_min["rolling_min_wd"] - rolling_min["rolling_min_wd"].shift(1)
         rolling_min["lag_duration_minutes"] = (rolling_min["date"] - rolling_min["date"].shift(1)).dt.total_seconds() / 60
         rolling_min["lag_min_wd_per_minute"] = rolling_min["lag_min_wd"]/rolling_min["lag_duration_minutes"]
         rolling_min["change_pt"] = np.select(condlist=[rolling_min["lag_min_wd_per_minute"] != 0, rolling_min["date"] == rolling_min["date"].max(), rolling_min["lag_min_wd_per_minute"] == 0], choicelist= [True, True, False], default=False)
         
-        lower_quantile = np.quantile(rolling_min["rolling_min_wd"], 0.20)
+        lower_quantile = np.quantile(rolling_min["rolling_min_wd"], 0.01)
         upper_quantile = np.quantile(rolling_min["rolling_min_wd"], 0.75)
         
         change_pts = rolling_min.query("change_pt == True & rolling_min_wd >= @lower_quantile & rolling_min_wd <= @upper_quantile ").loc[:,["date","rolling_min_wd"]]        
