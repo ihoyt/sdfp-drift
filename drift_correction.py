@@ -169,7 +169,7 @@ def smooth_baseline_wl(x):
         rolling_min["lag_min_wd_per_minute"] = rolling_min["lag_min_wd"]/rolling_min["lag_duration_minutes"]
         rolling_min["change_pt"] = np.select(condlist=[rolling_min["lag_min_wd_per_minute"] != 0, rolling_min["date"] == rolling_min["date"].max(), rolling_min["lag_min_wd_per_minute"] == 0], choicelist= [True, True, False], default=False)
         
-        lower_quantile = np.quantile(rolling_min["rolling_min_wd"], 0.01)
+        lower_quantile = np.quantile(rolling_min["rolling_min_wd"], 0.10)
         upper_quantile = np.quantile(rolling_min["rolling_min_wd"], 0.75)
         
         change_pts = rolling_min.query("change_pt == True & rolling_min_wd >= @lower_quantile & rolling_min_wd <= @upper_quantile ").loc[:,["date","rolling_min_wd"]]        
